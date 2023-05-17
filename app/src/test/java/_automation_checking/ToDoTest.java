@@ -75,16 +75,76 @@ public class ToDoTest {
         ToDoPage todoPage = new ToDoPage(driver);
         todoPage.navigateTo();
         todoPage.addItem("hello");
-        WebElement todoBox = driver.findElement(By.cssSelector(".view > label"));
-        act.doubleClick(todoBox).sendKeys("goodbye");
-        Thread.sleep(3000);
-        todoBox.sendKeys(Keys.ENTER);
-        Thread.sleep(3000);
+        WebElement todoBox = driver.findElement(By.cssSelector(".view > label:nth-child(2)"));
+        Thread.sleep(2000);
+        act.doubleClick(todoBox).perform();
+        Thread.sleep(2000);
+        WebElement todoBox2 = driver.findElement(By.className("edit"));
+        todoBox2.sendKeys("goodbye");
+        Thread.sleep(2000);
+        todoBox2.sendKeys(Keys.ENTER);
+        assertEquals("hellogoodbye", todoPage.get1stItemText());
+    }
+    @Test
+    void modifyThenEscapeItem() throws InterruptedException {
+        Actions act = new Actions(driver);
+        ToDoPage todoPage = new ToDoPage(driver);
+        todoPage.navigateTo();
+        todoPage.addItem("hello");
+        WebElement todoBox = driver.findElement(By.cssSelector(".view > label:nth-child(2)"));
+        Thread.sleep(2000);
+        act.doubleClick(todoBox).perform();
+        Thread.sleep(2000);
+        WebElement todoBox2 = driver.findElement(By.className("edit"));
+        todoBox2.sendKeys("goodbye");
+        Thread.sleep(2000);
+        todoBox2.sendKeys(Keys.ESCAPE);
+        assertEquals("hello", todoPage.get1stItemText());
+    }
+    @Test
+    void canCompleteItem() throws InterruptedException {
+        ToDoPage todoPage = new ToDoPage(driver);
+        todoPage.navigateTo();
+        todoPage.addItem("a");
+        WebElement completeButton = driver.findElement(By.cssSelector(".toggle"));
+        completeButton.click();
+        assertTrue(completeButton.isSelected());
+    }
+    @Test
+    void canUncompleteItem() throws InterruptedException {
+        ToDoPage todoPage = new ToDoPage(driver);
+        todoPage.navigateTo();
+        todoPage.addItem("a");
+        WebElement completeButton = driver.findElement(By.cssSelector(".toggle"));
+        completeButton.click();
+        completeButton.click();
+        assertFalse(completeButton.isSelected());
+    }
+    @Test
+    void deleteIncompleteItem() throws InterruptedException {
+        Actions act = new Actions(driver);
+        ToDoPage todoPage = new ToDoPage(driver);
+        todoPage.navigateTo();
+        todoPage.addItem("hello");
+        Thread.sleep(2000);
+        WebElement delete = driver.findElement(By.cssSelector(".destroy"));
+        act.moveToElement(delete).click().build().perform();
+//        act.click().build().perform();
+//        delete.click();
+        Thread.sleep(2000);
+//        assertTrue(todoPage.get1stItemText().isEmpty());
     }
 
 
-    // li:nth-child(2) label
 
+    // li:nth-child(2) label
+//    @Test
+//    void newItemCurrency() throws InterruptedException {
+//        ToDoPage todoPage = new ToDoPage(driver);
+//        todoPage.navigateTo();
+//        todoPage.addItem("¥");
+//        assertEquals("¥", todoPage.get1stItemText());
+//    }
     @AfterEach
     void closeBrowser() {
         driver.quit();
