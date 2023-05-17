@@ -127,15 +127,17 @@ public class ToDoTest {
         todoPage.navigateTo();
         todoPage.addItem("hello");
         Thread.sleep(2000);
-        WebElement delete = driver.findElement(By.cssSelector(".destroy"));
-        act.moveToElement(delete).click().build().perform();
-//        act.click().build().perform();
-//        delete.click();
+        WebElement itemBox = driver.findElement(By.cssSelector(".view > label:nth-child(2)"));
+        act.moveToElement(itemBox).click().build().perform();
+        Thread.sleep(2000);
+        WebElement deleteButton = driver.findElement(By.cssSelector(".destroy"));
+        act.moveToElement(deleteButton).click().build().perform();
+//        act.click(deleteButton);
         Thread.sleep(2000);
 //        assertTrue(todoPage.get1stItemText().isEmpty());
     }
 
-
+///html/body/section/div/section/ul/li/div/button
 
     // li:nth-child(2) label
 //    @Test
