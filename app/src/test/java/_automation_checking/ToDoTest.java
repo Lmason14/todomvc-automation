@@ -1,5 +1,6 @@
 package _automation_checking;
 
+import dev.failsafe.internal.util.Assert;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
@@ -10,6 +11,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 
 import java.io.File;
+import java.util.List;
+import java.util.function.BooleanSupplier;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ToDoTest {
@@ -132,9 +136,9 @@ public class ToDoTest {
         Thread.sleep(2000);
         WebElement deleteButton = driver.findElement(By.cssSelector(".destroy"));
         act.moveToElement(deleteButton).click().build().perform();
-//        act.click(deleteButton);
         Thread.sleep(2000);
-//        assertTrue(todoPage.get1stItemText().isEmpty());
+        List<WebElement> deletedItem = driver.findElements(By.cssSelector(".view > label:nth-child(2)"));
+        assertTrue(deletedItem.isEmpty());
     }
 
 ///html/body/section/div/section/ul/li/div/button
