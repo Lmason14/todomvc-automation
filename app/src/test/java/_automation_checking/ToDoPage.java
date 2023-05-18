@@ -30,4 +30,9 @@ public class ToDoPage {
         todoBox.sendKeys(modItem);
         todoBox.sendKeys(Keys.ENTER);
     }
+
+    public WebElement taskNumberToggle(Integer itemNumber) {
+        WebElement taskNo = driver.findElement(By.cssSelector(".todo-list > li:nth-child(" +itemNumber+") > div:nth-child(1) > input:nth-child(1)"));
+        return taskNo;
+    }
 }
