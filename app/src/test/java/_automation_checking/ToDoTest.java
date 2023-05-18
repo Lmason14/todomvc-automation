@@ -1,19 +1,12 @@
 package _automation_checking;
 
-import dev.failsafe.internal.util.Assert;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
-
-import java.io.File;
 import java.util.List;
-import java.util.function.BooleanSupplier;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ToDoTest {
@@ -88,6 +81,27 @@ public class ToDoTest {
         Thread.sleep(2000);
         todoBox2.sendKeys(Keys.ENTER);
         assertEquals("hellogoodbye", todoPage.get1stItemText());
+    }
+    @Test
+    void modifyAnItemUsingBackspace() throws InterruptedException {
+        Actions act = new Actions(driver);
+        ToDoPage todoPage = new ToDoPage(driver);
+        todoPage.navigateTo();
+        todoPage.addItem("hello");
+        WebElement todoBox = driver.findElement(By.cssSelector(".view > label:nth-child(2)"));
+        Thread.sleep(2000);
+        act.doubleClick(todoBox).perform();
+        Thread.sleep(2000);
+        WebElement todoBox2 = driver.findElement(By.className("edit"));
+        todoBox2.sendKeys(Keys.BACK_SPACE);
+        todoBox2.sendKeys(Keys.BACK_SPACE);
+        todoBox2.sendKeys(Keys.BACK_SPACE);
+        todoBox2.sendKeys(Keys.BACK_SPACE);
+        todoBox2.sendKeys("ow are you");
+        Thread.sleep(2000);
+        todoBox2.sendKeys(Keys.ENTER);
+        Thread.sleep(2000);
+        assertEquals("how are you", todoPage.get1stItemText());
     }
     @Test
     void modifyThenEscapeItem() throws InterruptedException {
@@ -316,15 +330,37 @@ public class ToDoTest {
         List<WebElement> itemCompleted = driver.findElements(By.cssSelector(".todo-list > li:nth-child(2) > div:nth-child(1) > input:nth-child(1)"));
         assertTrue(itemCompleted.isEmpty());
     }
+    @Test
+    void canCompleteAllWithDownArrow() throws InterruptedException {
+        ToDoPage todoPage = new ToDoPage(driver);
+        todoPage.navigateTo();
+        todoPage.addItem("hello");
+        todoPage.addItem("goodbye");
+        Thread.sleep(2000);
+        WebElement completeAll = driver.findElement(By.cssSelector(".main > label:nth-child(2)"));
+        completeAll.click();
+        Thread.sleep(2000);
+        WebElement todoCount = driver.findElement(By.className("todo-count"));
+        String todoText = todoCount.getText();
+        assertEquals("0 items left", todoText);
+    }
+    @Test
+    void canUnCompleteAllWithDownArrow() throws InterruptedException {
+        ToDoPage todoPage = new ToDoPage(driver);
+        todoPage.navigateTo();
+        todoPage.addItem("hello");
+        todoPage.addItem("goodbye");
+        Thread.sleep(2000);
+        WebElement completeAll = driver.findElement(By.cssSelector(".main > label:nth-child(2)"));
+        completeAll.click();
+        Thread.sleep(2000);
+        WebElement todoCount = driver.findElement(By.className("todo-count"));
+        completeAll.click();
+        Thread.sleep(2000);
+        String todoText = todoCount.getText();
+        assertEquals("2 items left", todoText);
+    }
 
-
-//    @Test
-//    void newItemCurrency() throws InterruptedException {
-//        ToDoPage todoPage = new ToDoPage(driver);
-//        todoPage.navigateTo();
-//        todoPage.addItem("¥");
-//        assertEquals("¥", todoPage.get1stItemText());
-//    }
     @AfterEach
     void closeBrowser() {
         driver.quit();
