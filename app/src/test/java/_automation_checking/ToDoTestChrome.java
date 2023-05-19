@@ -16,6 +16,8 @@ public class ToDoTestChrome {
     void launchBrowser() {
         driver = new ChromeDriver();
     }
+
+    // When we add a single character it is listed as a todo item
     @Test
     void newItemSingleCharacter()  {
         ToDoPage todoPage = new ToDoPage(driver);
@@ -23,6 +25,8 @@ public class ToDoTestChrome {
         todoPage.addItem("a");
         assertEquals("a", todoPage.get1stItemText());
     }
+
+    // When we add a single word string it is listed as a todo item
     @Test
     void newItemSingleWord()  {
         ToDoPage todoPage = new ToDoPage(driver);
@@ -30,7 +34,8 @@ public class ToDoTestChrome {
         todoPage.addItem("hello");
         assertEquals("hello", todoPage.get1stItemText());
     }
-    // li:nth-child(2) label
+
+    // When we add a single letter string from a language other than english it is listed as a todo item
     @Test
     void newItemSpecialCharacter()  {
         ToDoPage todoPage = new ToDoPage(driver);
@@ -38,6 +43,8 @@ public class ToDoTestChrome {
         todoPage.addItem("è");
         assertEquals("è", todoPage.get1stItemText());
     }
+
+    // When we add a single symbol it is listed as a todo item
     @Test
     void newItemSymbol()  {
         ToDoPage todoPage = new ToDoPage(driver);
@@ -45,6 +52,8 @@ public class ToDoTestChrome {
         todoPage.addItem("@");
         assertEquals("@", todoPage.get1stItemText());
     }
+
+    // When we add a a single punctuation mark it is listed as a todo item
     @Test
     void newItemPunctuation()  {
         ToDoPage todoPage = new ToDoPage(driver);
@@ -52,6 +61,8 @@ public class ToDoTestChrome {
         todoPage.addItem("!");
         assertEquals("!", todoPage.get1stItemText());
     }
+
+    // When we add a string sentence it is listed as a todo item
     @Test
     void newItemSentence()  {
         ToDoPage todoPage = new ToDoPage(driver);
@@ -59,6 +70,8 @@ public class ToDoTestChrome {
         todoPage.addItem("We are testing the page");
         assertEquals("We are testing the page", todoPage.get1stItemText());
     }
+
+    // When we add a single currency denotation string it is listed as a todo item
     @Test
     void newItemCurrency()  {
         ToDoPage todoPage = new ToDoPage(driver);
@@ -66,6 +79,8 @@ public class ToDoTestChrome {
         todoPage.addItem("¥");
         assertEquals("¥", todoPage.get1stItemText());
     }
+
+    // When we add a new todo item and when it becomes listed we double click on it, then can add to the string and then this changes the item
     @Test
     void modifyAnItem()  {
         Actions act = new Actions(driver);
@@ -79,6 +94,8 @@ public class ToDoTestChrome {
         todoBox2.sendKeys(Keys.ENTER);
         assertEquals("hellogoodbye", todoPage.get1stItemText());
     }
+
+    // When we add a new todo item and when it becomes listed we double click on it, we then use backspace and then add more text, which then changes the item
     @Test
     void modifyAnItemUsingBackspace()  {
         Actions act = new Actions(driver);
@@ -96,6 +113,8 @@ public class ToDoTestChrome {
         todoBox2.sendKeys(Keys.ENTER);
         assertEquals("how are you", todoPage.get1stItemText());
     }
+
+    // When we add a new todo item and when it becomes listed we double click on it, then when we add more text but press "escape" these changes do not remain
     @Test
     void modifyThenEscapeItem()  {
         Actions act = new Actions(driver);
@@ -109,6 +128,8 @@ public class ToDoTestChrome {
         todoBox2.sendKeys(Keys.ESCAPE);
         assertEquals("hello", todoPage.get1stItemText());
     }
+
+    // When we add a new todo item and when we click the button next to it, it becomes completed
     @Test
     void canCompleteItem()  {
         ToDoPage todoPage = new ToDoPage(driver);
@@ -118,6 +139,8 @@ public class ToDoTestChrome {
         completeButton.click();
         assertTrue(completeButton.isSelected());
     }
+
+    // When we add a new todo item and when we click the button next to it, it becomes completed and clicking again uncompletes it
     @Test
     void canUncompleteItem()  {
         ToDoPage todoPage = new ToDoPage(driver);
@@ -128,6 +151,8 @@ public class ToDoTestChrome {
         completeButton.click();
         assertFalse(completeButton.isSelected());
     }
+
+    // When we add a new todo item and when we click the cross button next to it, it removes it from the list
     @Test
     void deleteIncompleteItem()  {
         Actions act = new Actions(driver);
@@ -142,6 +167,7 @@ public class ToDoTestChrome {
         assertTrue(deletedItem.isEmpty());
     }
 
+    // When we add a new todo item, then click complete and then when we click the cross button next to it, it removes it from the list
     @Test
     void deleteCompleteItem()  {
         Actions act = new Actions(driver);
@@ -158,7 +184,7 @@ public class ToDoTestChrome {
         assertTrue(deletedItem.isEmpty());
     }
 
-
+    // When we add a new todoItem and then complete it, we can see the status "0 items left" in the status bar
     @Test
     void statusBarDisplays0ItemsLeft()  {
         ToDoPage todoPage = new ToDoPage(driver);
@@ -170,6 +196,7 @@ public class ToDoTestChrome {
         String todoText = todoCount.getText();
         assertEquals("0 items left", todoText);
     }
+    // When we add a new todoItem, we can see the message "1 item left" in the status bar at the bottom of the list
     @Test
     void statusBarDisplaysOneItemsLeft()  {
         ToDoPage todoPage = new ToDoPage(driver);
@@ -179,7 +206,7 @@ public class ToDoTestChrome {
         String todoText = todoCount.getText();
         assertEquals("1 item left", todoText);
     }
-
+    //When we add 10 todoItem's, we can see the message "10 items left" in the status bar at the bottom of the list
     @Test
     void statusBarDisplaysTenItemLeft()  {
         ToDoPage todoPage = new ToDoPage(driver);
@@ -198,7 +225,7 @@ public class ToDoTestChrome {
         String todoText = todoCount.getText();
         assertEquals("10 items left", todoText);
     }
-
+    // When we initially load the page up we can see that there is no status bar as no items have been added
     @Test
     void statusBarNotVisibleOnLoadUpOfPage() {
         ToDoPage todoPage = new ToDoPage(driver);
@@ -206,6 +233,7 @@ public class ToDoTestChrome {
         List<WebElement> footerBar = driver.findElements(By.className("footer"));
         assertTrue(footerBar.isEmpty());
     }
+    // When we add an item and then delete it, we can verify that the status bar disappears
     @Test
     void statusBarNotVisibleWhenNoItemsLeftAfterDeleting()  {
         Actions act = new Actions(driver);
@@ -219,7 +247,7 @@ public class ToDoTestChrome {
         List<WebElement> footerBar = driver.findElements(By.className("footer"));
         assertTrue(footerBar.isEmpty());
     }
-
+    // After adding 2 items and completing 1, we can click the active tab and view items which have not been completed
     @Test
     void canToggleToActiveTasks()  {
         Actions act = new Actions(driver);
@@ -234,7 +262,7 @@ public class ToDoTestChrome {
         String pageURL = driver.getCurrentUrl();
         assertEquals("https://todomvc.com/examples/react/#/active", pageURL);
     }
-
+    // After adding 2 items and completing 1, we can click the completed tab and view items which have been completed
     @Test
     void canToggleToAllCompleteTasks()  {
         Actions act = new Actions(driver);
@@ -249,7 +277,7 @@ public class ToDoTestChrome {
         String pageURL = driver.getCurrentUrl();
         assertEquals("https://todomvc.com/examples/react/#/completed", pageURL);
     }
-
+    // After adding 2 items and completing 1, we can click the completed tab and click the all tab to view both active and completed items
     @Test
     void canToggleToAllTasks()  {
         Actions act = new Actions(driver);
@@ -266,7 +294,7 @@ public class ToDoTestChrome {
         String pageURL = driver.getCurrentUrl();
         assertEquals("https://todomvc.com/examples/react/#/", pageURL);
     }
-
+    // After adding 2 items, we can complete one and then click the clear completed button, and only see 1 active item left
     @Test
     void canClickClearCompleted()  {
         Actions act = new Actions(driver);
@@ -281,7 +309,7 @@ public class ToDoTestChrome {
         List<WebElement> clear = driver.findElements(By.className("clear-completed"));
         assertTrue(clear.isEmpty());
     }
-
+    // After adding 2 items, we can complete one and then click the clear completed button, and only see 1 active item left
     @Test
     void canClickClearCompletedAndCompletesItems()  {
         Actions act = new Actions(driver);
@@ -296,6 +324,7 @@ public class ToDoTestChrome {
         List<WebElement> itemCompleted = driver.findElements(By.cssSelector(".todo-list > li:nth-child(2) > div:nth-child(1) > input:nth-child(1)"));
         assertTrue(itemCompleted.isEmpty());
     }
+    // After adding 2 items, we can complete them all by clicking the down arrow
     @Test
     void canCompleteAllWithDownArrow()  {
         ToDoPage todoPage = new ToDoPage(driver);
@@ -308,6 +337,7 @@ public class ToDoTestChrome {
         String todoText = todoCount.getText();
         assertEquals("0 items left", todoText);
     }
+    // After adding 2 items, we can complete them all by clicking the down arrow, clicking it again will then uncomplete the items
     @Test
     void canUnCompleteAllWithDownArrow()  {
         ToDoPage todoPage = new ToDoPage(driver);
@@ -321,6 +351,7 @@ public class ToDoTestChrome {
         String todoText = todoCount.getText();
         assertEquals("2 items left", todoText);
     }
+    // One test to cover quite a few actions, adding items, completing and removing items and then finishing with an empty list.
     @Test
     void bigRunThrough() throws InterruptedException {
         Actions act = new Actions(driver);
@@ -358,11 +389,9 @@ public class ToDoTestChrome {
         assertTrue(footerBar.isEmpty());
 
     }
-    // assertEquals("line-through", defaultTodo.getCssValue("text-decoration-line"));
+
     @AfterEach
     void closeBrowser() {
         driver.quit();
     }
 }
-
-

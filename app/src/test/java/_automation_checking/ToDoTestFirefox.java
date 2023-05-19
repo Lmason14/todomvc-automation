@@ -389,7 +389,7 @@ public class ToDoTestFirefox {
         assertTrue(footerBar.isEmpty());
 
     }
-// assertEquals("line-through", defaultTodo.getCssValue("text-decoration-line"));
+
     @AfterEach
     void closeBrowser() {
         driver.quit();
