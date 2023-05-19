@@ -4,6 +4,7 @@ Repo contains:
 - Tests for the ToDo react framework in Firefox browser
 - Tests for the ToDo react framework in Chrome browser
 - Page Object Model for test suite
+- Image of test reports
 
 What we would do next:
 
