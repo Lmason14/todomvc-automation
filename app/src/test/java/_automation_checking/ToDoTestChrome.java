@@ -4,17 +4,17 @@ import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ToDoTest {
-    private static FirefoxDriver driver;
+public class ToDoTestChrome {
+    private static ChromeDriver driver;
 
     @BeforeEach
     void launchBrowser() {
-        driver = new FirefoxDriver();
+        driver = new ChromeDriver();
     }
     @Test
     void newItemSingleCharacter()  {
@@ -30,7 +30,7 @@ public class ToDoTest {
         todoPage.addItem("hello");
         assertEquals("hello", todoPage.get1stItemText());
     }
-// li:nth-child(2) label
+    // li:nth-child(2) label
     @Test
     void newItemSpecialCharacter()  {
         ToDoPage todoPage = new ToDoPage(driver);
@@ -200,14 +200,14 @@ public class ToDoTest {
     }
 
     @Test
-    void statusBarNotVisableOnLoadUpOfPage() {
+    void statusBarNotVisibleOnLoadUpOfPage() {
         ToDoPage todoPage = new ToDoPage(driver);
         todoPage.navigateTo();
         List<WebElement> footerBar = driver.findElements(By.className("footer"));
         assertTrue(footerBar.isEmpty());
     }
     @Test
-    void statusBarNotVisableWhenNoItemsLeftAfterDeleting()  {
+    void statusBarNotVisibleWhenNoItemsLeftAfterDeleting()  {
         Actions act = new Actions(driver);
         ToDoPage todoPage = new ToDoPage(driver);
         todoPage.navigateTo();
@@ -358,7 +358,7 @@ public class ToDoTest {
         assertTrue(footerBar.isEmpty());
 
     }
-// assertEquals("line-through", defaultTodo.getCssValue("text-decoration-line"));
+    // assertEquals("line-through", defaultTodo.getCssValue("text-decoration-line"));
     @AfterEach
     void closeBrowser() {
         driver.quit();
