@@ -184,7 +184,7 @@ public class ToDoTestFirefox {
         assertTrue(deletedItem.isEmpty());
     }
 
-
+    // When we add a new todoItem and then complete it, we can see the status "0 items left" in the status bar
     @Test
     void statusBarDisplays0ItemsLeft()  {
         ToDoPage todoPage = new ToDoPage(driver);
@@ -196,6 +196,7 @@ public class ToDoTestFirefox {
         String todoText = todoCount.getText();
         assertEquals("0 items left", todoText);
     }
+    // When we add a new todoItem, we can see the message "1 item left" in the status bar at the bottom of the list
     @Test
     void statusBarDisplaysOneItemsLeft()  {
         ToDoPage todoPage = new ToDoPage(driver);
@@ -205,7 +206,7 @@ public class ToDoTestFirefox {
         String todoText = todoCount.getText();
         assertEquals("1 item left", todoText);
     }
-
+    //When we add 10 todoItem's, we can see the message "10 items left" in the status bar at the bottom of the list
     @Test
     void statusBarDisplaysTenItemLeft()  {
         ToDoPage todoPage = new ToDoPage(driver);
@@ -224,7 +225,7 @@ public class ToDoTestFirefox {
         String todoText = todoCount.getText();
         assertEquals("10 items left", todoText);
     }
-
+    // When we initially load the page up we can see that there is no status bar as no items have been added
     @Test
     void statusBarNotVisableOnLoadUpOfPage() {
         ToDoPage todoPage = new ToDoPage(driver);
@@ -232,6 +233,7 @@ public class ToDoTestFirefox {
         List<WebElement> footerBar = driver.findElements(By.className("footer"));
         assertTrue(footerBar.isEmpty());
     }
+        // When we add an item and then delete it, we can verify that the status bar disappears
     @Test
     void statusBarNotVisableWhenNoItemsLeftAfterDeleting()  {
         Actions act = new Actions(driver);
@@ -245,7 +247,7 @@ public class ToDoTestFirefox {
         List<WebElement> footerBar = driver.findElements(By.className("footer"));
         assertTrue(footerBar.isEmpty());
     }
-
+    // After adding 2 items and completing 1, we can click the active tab and view items which have not been completed
     @Test
     void canToggleToActiveTasks()  {
         Actions act = new Actions(driver);
@@ -260,7 +262,7 @@ public class ToDoTestFirefox {
         String pageURL = driver.getCurrentUrl();
         assertEquals("https://todomvc.com/examples/react/#/active", pageURL);
     }
-
+    // After adding 2 items and completing 1, we can click the completed tab and view items which have been completed
     @Test
     void canToggleToAllCompleteTasks()  {
         Actions act = new Actions(driver);
@@ -275,7 +277,7 @@ public class ToDoTestFirefox {
         String pageURL = driver.getCurrentUrl();
         assertEquals("https://todomvc.com/examples/react/#/completed", pageURL);
     }
-
+    // After adding 2 items and completing 1, we can click the completed tab and click the all tab to view both active and completed items
     @Test
     void canToggleToAllTasks()  {
         Actions act = new Actions(driver);
@@ -292,7 +294,7 @@ public class ToDoTestFirefox {
         String pageURL = driver.getCurrentUrl();
         assertEquals("https://todomvc.com/examples/react/#/", pageURL);
     }
-
+    // After adding 2 items, we can complete one and then click the clear completed button, and only see 1 active item left
     @Test
     void canClickClearCompleted()  {
         Actions act = new Actions(driver);
@@ -307,7 +309,7 @@ public class ToDoTestFirefox {
         List<WebElement> clear = driver.findElements(By.className("clear-completed"));
         assertTrue(clear.isEmpty());
     }
-
+    // After adding 2 items, we can complete one and then click the clear completed button, and only see 1 active item left
     @Test
     void canClickClearCompletedAndCompletesItems()  {
         Actions act = new Actions(driver);
@@ -322,6 +324,7 @@ public class ToDoTestFirefox {
         List<WebElement> itemCompleted = driver.findElements(By.cssSelector(".todo-list > li:nth-child(2) > div:nth-child(1) > input:nth-child(1)"));
         assertTrue(itemCompleted.isEmpty());
     }
+        // After adding 2 items, we can complete them all by clicking the down arrow
     @Test
     void canCompleteAllWithDownArrow()  {
         ToDoPage todoPage = new ToDoPage(driver);
@@ -334,6 +337,7 @@ public class ToDoTestFirefox {
         String todoText = todoCount.getText();
         assertEquals("0 items left", todoText);
     }
+    // After adding 2 items, we can complete them all by clicking the down arrow, clicking it again will then uncomplete the items
     @Test
     void canUnCompleteAllWithDownArrow()  {
         ToDoPage todoPage = new ToDoPage(driver);
@@ -347,6 +351,7 @@ public class ToDoTestFirefox {
         String todoText = todoCount.getText();
         assertEquals("2 items left", todoText);
     }
+    // One test to cover quite a few actions, adding items, completing and removing items and then finishing with an empty list.
     @Test
     void bigRunThrough() throws InterruptedException {
         Actions act = new Actions(driver);
