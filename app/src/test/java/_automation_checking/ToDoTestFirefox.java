@@ -16,6 +16,8 @@ public class ToDoTestFirefox {
     void launchBrowser() {
         driver = new FirefoxDriver();
     }
+
+    // When we add a single character it is listed as a todo item
     @Test
     void newItemSingleCharacter()  {
         ToDoPage todoPage = new ToDoPage(driver);
@@ -23,6 +25,8 @@ public class ToDoTestFirefox {
         todoPage.addItem("a");
         assertEquals("a", todoPage.get1stItemText());
     }
+
+    // When we add a single word string it is listed as a todo item
     @Test
     void newItemSingleWord()  {
         ToDoPage todoPage = new ToDoPage(driver);
@@ -30,7 +34,8 @@ public class ToDoTestFirefox {
         todoPage.addItem("hello");
         assertEquals("hello", todoPage.get1stItemText());
     }
-// li:nth-child(2) label
+
+    // When we add a single letter string from a language other than english it is listed as a todo item
     @Test
     void newItemSpecialCharacter()  {
         ToDoPage todoPage = new ToDoPage(driver);
@@ -38,6 +43,8 @@ public class ToDoTestFirefox {
         todoPage.addItem("è");
         assertEquals("è", todoPage.get1stItemText());
     }
+
+    // When we add a single symbol it is listed as a todo item
     @Test
     void newItemSymbol()  {
         ToDoPage todoPage = new ToDoPage(driver);
@@ -45,6 +52,8 @@ public class ToDoTestFirefox {
         todoPage.addItem("@");
         assertEquals("@", todoPage.get1stItemText());
     }
+
+    // When we add a a single punctuation mark it is listed as a todo item
     @Test
     void newItemPunctuation()  {
         ToDoPage todoPage = new ToDoPage(driver);
@@ -52,6 +61,8 @@ public class ToDoTestFirefox {
         todoPage.addItem("!");
         assertEquals("!", todoPage.get1stItemText());
     }
+
+    // When we add a string sentence it is listed as a todo item
     @Test
     void newItemSentence()  {
         ToDoPage todoPage = new ToDoPage(driver);
@@ -59,6 +70,8 @@ public class ToDoTestFirefox {
         todoPage.addItem("We are testing the page");
         assertEquals("We are testing the page", todoPage.get1stItemText());
     }
+
+    // When we add a single currency denotation string it is listed as a todo item
     @Test
     void newItemCurrency()  {
         ToDoPage todoPage = new ToDoPage(driver);
@@ -66,6 +79,8 @@ public class ToDoTestFirefox {
         todoPage.addItem("¥");
         assertEquals("¥", todoPage.get1stItemText());
     }
+
+    // When we add a new todo item and when it becomes listed we double click on it, then can add to the string and then this changes the item
     @Test
     void modifyAnItem()  {
         Actions act = new Actions(driver);
@@ -79,6 +94,8 @@ public class ToDoTestFirefox {
         todoBox2.sendKeys(Keys.ENTER);
         assertEquals("hellogoodbye", todoPage.get1stItemText());
     }
+
+    // When we add a new todo item and when it becomes listed we double click on it, we then use backspace and then add more text, which then changes the item
     @Test
     void modifyAnItemUsingBackspace()  {
         Actions act = new Actions(driver);
@@ -96,6 +113,8 @@ public class ToDoTestFirefox {
         todoBox2.sendKeys(Keys.ENTER);
         assertEquals("how are you", todoPage.get1stItemText());
     }
+
+    // When we add a new todo item and when it becomes listed we double click on it, then when we add more text but press "escape" these changes do not remain
     @Test
     void modifyThenEscapeItem()  {
         Actions act = new Actions(driver);
@@ -109,6 +128,8 @@ public class ToDoTestFirefox {
         todoBox2.sendKeys(Keys.ESCAPE);
         assertEquals("hello", todoPage.get1stItemText());
     }
+
+    // When we add a new todo item and when we click the button next to it, it becomes completed
     @Test
     void canCompleteItem()  {
         ToDoPage todoPage = new ToDoPage(driver);
@@ -118,6 +139,8 @@ public class ToDoTestFirefox {
         completeButton.click();
         assertTrue(completeButton.isSelected());
     }
+
+    // When we add a new todo item and when we click the button next to it, it becomes completed and clicking again uncompletes it
     @Test
     void canUncompleteItem()  {
         ToDoPage todoPage = new ToDoPage(driver);
@@ -128,6 +151,8 @@ public class ToDoTestFirefox {
         completeButton.click();
         assertFalse(completeButton.isSelected());
     }
+
+    // When we add a new todo item and when we click the cross button next to it, it removes it from the list
     @Test
     void deleteIncompleteItem()  {
         Actions act = new Actions(driver);
@@ -142,6 +167,7 @@ public class ToDoTestFirefox {
         assertTrue(deletedItem.isEmpty());
     }
 
+    // When we add a new todo item, then click complete and then when we click the cross button next to it, it removes it from the list
     @Test
     void deleteCompleteItem()  {
         Actions act = new Actions(driver);
